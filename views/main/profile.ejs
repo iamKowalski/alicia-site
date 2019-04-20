@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header/header.ejs') %>
+
+<body class="">
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="/">
+                            <i class="tim-icons icon-align-center"></i>
+                            <p>Início</p>
+                        </a>
+                    </li>
+                    <% if (logged) { %>
+                    <li class="active">
+                        <a href="/profile">
+                            <i class="tim-icons icon-single-02"></i>
+                            <p>Meu Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/find">
+                            <i class="tim-icons icon-zoom-split"></i>
+                            <p>Procurar usuário</p>
+                        </a>
+                    </li>
+                    <% } else { %>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <%- include('../partials/navbar.ejs') %>
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-18 col-md-12">
+                        <div class="card card-user">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <div class="author">
+                                        <div class="block block-one"></div>
+                                        <div class="block block-two"></div>
+                                        <div class="block block-three"></div>
+                                        <div class="block block-four"></div>
+                                        <a>
+                                            <img class="avatar" src="<%- avatar %>" alt="<%- tag %>">
+                                            <h5 class="title"><%- tag %></h5>
+                                        </a>
+                                        <div class="card-description">
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium
+                                            laudantium similique alias quod dolore corrupti asperiores assumenda ipsam
+                                            possimus, ea recusandae rem enim blanditiis culpa cum dolorum, impedit ipsum
+                                            quaerat!
+                                        </div>
+                                    </div>
+                                    <div class="card-description text-center">
+                                        Bans: 0, Kicks: 0, Mutes: 0, Warns: 0
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/core/jquery.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+    <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+    <script>
+        let redirect = () => window.location.href = 'false' == "false" ? `https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.herokuapp.com/api/login&response_type=code&scope=identify` : "/api/logout"
+    </script>
+</body>
+
+</html>
