@@ -4,7 +4,8 @@
   "description": "Alicia's website",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [
     "node.js",
@@ -22,7 +23,7 @@
     "express": "^4.16.4",
     "express-rate-limit": "^3.4.1",
     "express-session": "^1.16.1",
-    "mongoose": "^5.5.2",
+    "mongoose": "^5.5.3",
     "request": "^2.88.0"
   }
 }

@@ -1,10 +1,11 @@
 const request = require("request")
 const User = require("../structures/user.js")
+const database = require("../structures/database.js")
 const bt = require('btoa')
 const clientFunction = require("../structures/client.js")
 const secret = "AZ85WBC36wiOdUBaFNe8OYkq9jVhDJ2J";
 const id = "554402289259905037"
-const redirect_uri = "https://alicinha.herokuapp.com/api/login"
+const redirect_uri = "https://alicinha.glitch.me/api/login"
 function login(req, res) {
     if (!req.query.code) return res.redirect("/");
     request({
@@ -22,8 +23,18 @@ function login(req, res) {
         }, async function (_, _, userBody) {
             userBody = JSON.parse(userBody)
             if (!userBody.id) return res.redirect("/");
-            req.session.user = new User(userBody)
-            res.redirect("/");
+            request({
+              method: 'GET',
+              url: 'https://discordapp.com/api/users/@me/guilds',
+              headers: {
+                Authorization: 'Bearer ' + json['access_token']        
+              }
+            }, async function (_,_,guildBody) {
+              guildBody = JSON.parse(guildBody)
+              req.session.guilds = guildBody
+              req.session.user = new User(userBody)
+              res.redirect("/");
+            })
         })
     })
 }
@@ -36,8 +47,17 @@ function find(req, res) {
     res.json(client.fetchName(name).slice(0, 50))
 }
 
-function user(req, res) {
-
+async function saveConfig(req, res) {
+    if (!req.session.user) return res.end("Invalid")
+    const client = clientFunction()
+    if (!client) return;
+    const { id, prefixo } = req.body
+    var db_guild = await database.Guilds.findById(id)
+    db_guild ? db_guild : db_guild = await new database.Guilds({ _id: id})
+    db_guild.prefix = prefixo
+    await db_guild.save().then(async () => {
+      return res.end("Done")
+    })
 }
 
 function logout(req, res) {
@@ -50,5 +70,6 @@ module.exports = function (route) {
     if (route == "/logout") return logout
     if (route == "/find") return find
     if (route == "/user/id") return user
+    if (route == "/guild/save") return saveConfig
 
 }

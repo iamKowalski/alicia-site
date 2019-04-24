@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header/header.ejs') %>
+
+<body class="">
+  <div class="wrapper">
+            <div class="sidebar">
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="/">
+                            <i class="tim-icons icon-align-center"></i>
+                            <p>Início</p>
+                        </a>
+                    </li>
+                    <% if (logged) { %>
+                    <li>
+                        <a href="/profile">
+                            <i class="tim-icons icon-single-02"></i>
+                            <p>Meu Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/find">
+                            <i class="tim-icons icon-zoom-split"></i>
+                            <p>Procurar usuário</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/guilds">
+                            <i class="tim-icons icon-link-72"></i>
+                            <p>Servidores<p>
+                        </a>
+                    </li>
+                    <% } else { %>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    <div class="main-panel">
+      <%- include('../partials/navbar.ejs') %>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                    <h5 class="card-category">Total de servidores: <%- guilds.length %></h5>
+                    <h2 class="card-title">Lista de servidores</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <% guilds.forEach(g => { %>
+                    <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                      <div class="font-icon-detail">
+                        <a href="/guilds/view/<%- g.id %>">
+                          <img class="avatar" src="https://cdn.discordapp.com/icons/<%- g.id %>/<%- g.icon %>.png?size=1024" alt="<%- g.name %>" >
+                          <p><%- g.name.replace('<', '≺').replace('>', '≻') %></p>
+                        </a>
+                      </div>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script>
+    let redirect = () => window.location.href = 'false' == "false" ? `https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.glitch.me/api/login&response_type=code&scope=identify%20guilds` : "/api/logout"
+  </script>
+</body>
+
+</html>

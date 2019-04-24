@@ -10,24 +10,19 @@
       <%- include('../partials/navbar.ejs') %>
       <div class="content">
         <div class="row">
-          <div class="col-12">
-            <div class="card card-user">
-              <div class="card-body">
-                <p class="card-text">
-                  <div class="author">
-                    <a>
-                      <img class="avatar" src="<%- clientAvatar %>" alt="<%- clientTag %>" width="500" height="500">
-                      <h4 class="title"><%- clientTag %></h4>
+          <div class="col-lg-18 col-md-12">
+            <div class="card card-chart">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-sm-6 text-center" style="margin-left: 250px;">
+                    <h2 class="card-title">Erro</h2>
+                    <h5>Para gerenciar este servidor você precisa da permissão "MANAGE_GUILDS" nele!</h5><br>
+                    <a href="/guilds">
+                      <i class="tim-icons icon-double-left"></i>
+                      <p>Servidores</p>
                     </a>
-                    <p class="description">
-                      Alícia chegou para moderar o seu servidor com um toque feminino!
-                    </p>
-                    <div class="card-description">
-                      Ela vai moderar o seu servidor com seus logs, já que a Alícia faz logs de tudo, bans, kicks,
-                      mensagens editadas em muito mais!<br>Faça login e desfrute os beneficios "AINDA EM BETA"
-                    </div>
                   </div>
-                </p>
+                </div>
               </div>
             </div>
           </div>
