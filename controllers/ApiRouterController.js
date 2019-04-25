@@ -51,13 +51,57 @@ async function saveConfig(req, res) {
     if (!req.session.user) return res.end("Invalid")
     const client = clientFunction()
     if (!client) return;
-    const { id, prefixo } = req.body
+    const { id, prefixo, logs, logsChannel, welcomeOn, welcome, levelOn, level, leaveOn, leave, userId } = req.body
     var db_guild = await database.Guilds.findById(id)
     db_guild ? db_guild : db_guild = await new database.Guilds({ _id: id})
     db_guild.prefix = prefixo
-    await db_guild.save().then(async () => {
-      return res.end("Done")
+    if (logs) {
+      db_guild.logs = true
+      db_guild.logsChannel = logsChannel
+    } else {
+      db_guild.logs = false
+      db_guild.logsChannel = null
+    }
+    if (welcomeOn) {
+      db_guild.welcome = {
+        channel: welcome.channel,
+        message: welcome.message
+      }
+    } else {
+      db_guild.welcome = null
+    }
+    if (leaveOn) {
+      db_guild.leave = {
+        channel: leave.channel,
+        message: leave.message
+      }
+    } else {
+      db_guild.leave = null
+    }
+    if (levelOn) {
+      db_guild.leveling = {
+        channel: level.channel,
+        message: level.message
+      }      
+    } else {
+      db_guild.leveling = null
+    } 
+    await db_guild.save().then(async (d) => {
+      await res.end("Done")
+      if (d.logs) {
+        client.guilds.get(d._id).channels.get(d.logsChannel).send({embed: { "description": `**${client.users.get(userId).tag}** fez alterações nas configuração do servidor através do [**menu online**](https://alicinha.glitch.me/guilds/view/${id})!`, "color": 9666009 }})
+      }
     })
+}
+
+async function searchServer(req, res) {
+    if (!req.session.user) return res.end("Invalid")
+    if (!req.session.guilds) return res.end("Invalid")
+    const client = clientFunction()
+    if (!client) return;
+    const { name } = req.body
+    
+    res.json(req.session.guilds.filter(g => g.name.toLowerCase().includes(name.toLowerCase())).slice(0,10))
 }
 
 function logout(req, res) {
@@ -71,5 +115,6 @@ module.exports = function (route) {
     if (route == "/find") return find
     if (route == "/user/id") return user
     if (route == "/guild/save") return saveConfig
+    if (route == "/guild/find") return searchServer
 
 }

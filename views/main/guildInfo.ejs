@@ -35,6 +35,12 @@
                     </li>
                     <% } else { %>
                     <% } %>
+                    <li>
+                      <a href="/invite">
+                      <i class="tim-icons icon-wifi"></i>
+                      <p>Convite<p>
+                      </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -45,9 +51,12 @@
                   <div class="col-md-8">
                     <div class="card">
                       <div class="card-header">
-                        <h5 class="title">
-                          Editar configuraçães
+                        <h5 class="card-title">
+                          Você pode ver os id's dos canais de <strong><%- guild.name.replace('<', '≺').replace('>', '≻') %></strong> rolando a página!
                         </h5>
+                        <h2 class="card-category">
+                          Editar configuraçães de <%- guild.name.replace('<', '≺').replace('>', '≻') %>(<%- guild.id %>)
+                        </h2>
                       </div>
                       <div class="card-body">
                           <div class="row">
@@ -56,6 +65,39 @@
                                 <label>Prefixo</label>
                                 <input type="text" class="form-control" placeholder="<%- db_guild.prefix %>" value="<%- db_guild.prefix %>" id="prefixo" >
                                 <input type="text" class="form-control" placeholder="<%- guild.id %>" value="<%- guild.id %>" id="id" style="display: none;" >
+                                <input type="text" class="form-control" placeholder="<%- id %>" value="<%- id %>" id="userid" style="display: none;" >
+                              </div>
+                            </div>
+                            <div class="col-md-5 pr-md-1">
+                              <div class="form-group">
+                                <label>Logs</label>
+                                <input type="text" class="form-control" placeholder="Id do canal" value="<%- db_guild.logs ? db_guild.logsChannel === null ? "Sistema desativado" : guild.channels.get(db_guild.logsChannel).id : "Sistema desativado!"%>" id="logs" >
+                              </div>
+                            </div>
+                            <div class="col-md-5 pr-md-1">
+                              <div class="form-group">
+                                <label>Boas-vindas/Bem-vindo (Também pode colocar embed!)</label>
+                                <input type="text" class="form-control" placeholder= "Id do canal" value="<%- db_guild.welcome ? guild.channels.get(db_guild.welcome.channel) ? guild.channels.get(db_guild.welcome.channel).id : "Canal não encontrado!" : "Sistema desativado" %>" id="welcome_channelId">
+                                <br>
+                                <textarea rows="4" cols="80" class="areatext form-control" placeholder= "Frase" value="<%- db_guild.welcome ? db_guild.welcome.message ? db_guild.welcome.message : "Frase não encontrada!" : "Sistema desativado" %>" id="welcome_message"><%- db_guild.welcome ? db_guild.welcome.message ? db_guild.welcome.message : "Frase não encontrada!" : "Sistema desativado" %></textarea>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="col-md-5 pr-md-1">
+                              <div class="form-group">
+                                <label>Saída/Bye-Bye (Também pode colocar embed!)</label>
+                                <input type="text" class="form-control" placeholder= "Id do canal" value="<%- db_guild.leave ? guild.channels.get(db_guild.leave.channel) ? guild.channels.get(db_guild.leave.channel).id : "Canal não encontrado!" : "Sistema desativado" %>" id="leave_channelId">
+                                <br>
+                                <textarea rows="4" cols="80" class="areatext form-control" placeholder= "Frase" value="<%- db_guild.leave ? db_guild.leave.message ? db_guild.leave.message : "Frase não encontrada!" : "Sistema desativado" %>" id="leave_message"><%- db_guild.leave ? db_guild.leave.message ? db_guild.leave.message : "Frase não encontrada!" : "Sistema desativado" %></textarea>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="col-md-5 pr-md-1">
+                              <div class="form-group">
+                                <label>Frases de nível avançado (Também pode colocar embed!)</label>
+                                <input type="text" class="form-control" placeholder= "Id do canal" value="<%- db_guild.leveling ? guild.channels.get(db_guild.leveling.channel) ? guild.channels.get(db_guild.leveling.channel).id : "Canal não encontrado!" : "Sistema desativado" %>" id="level_channelId">
+                                <br>
+                                <textarea rows="4" cols="80" class="areatext form-control" placeholder= "Frase" value="<%- db_guild.leveling ? db_guild.leveling.message ? db_guild.leveling.message : "Frase não encontrada!" : "Sistema desativado" %>" id="level_message"><%- db_guild.leveling ? db_guild.leveling.message ? db_guild.leveling.message : "Frase não encontrada!" : "Sistema desativado" %></textarea>
                               </div>
                             </div>
                           </div>
@@ -88,6 +130,41 @@
                   </div>
                 </div>
             </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    Lista de canais do servidor <%- guild.name.replace('<', '≺').replace('>', '≻') %>
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+                      <thead class=" text-primary">
+                        <tr>
+                          <th>
+                            Canal
+                          </th>
+                          <th>
+                            ID
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% guild.channels.filter(ch => ch.type != "category" && ch.type != "voice").forEach(channel => { %>
+                          <tr>
+                            <td><%- channel.name.replace('<', '≺').replace('>', '≻') %></td>
+                            <td><%- channel.id %></td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
     <script src="/assets/js/core/jquery.min.js"></script>
@@ -97,27 +174,7 @@
     <script src="/assets/js/plugins/chartjs.min.js"></script>
     <script src="/assets/js/plugins/bootstrap-notify.js"></script>
     <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
-    <script>
-        let redirect = () => window.location.href = 'false' == "false" ? `https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.glitch.me/api/login&response_type=code&scope=identify%20guilds` : "/api/logout"
-        $('#save').on('click', function() {
-          if ($('#prefixo').val() === "") return
-          console.log($('#id').val())
-          $.ajax({
-            method: "POST",
-            url: "/api/guild/save",
-            data: {
-              id: $('#id').val(),
-              prefixo: $('#prefixo').val() 
-            }
-          }).fail(function () {
-            $.notify({ icon: "tim-icons icon-bell-55", message: `Falha ao salvar as configurações do servidor!`}, { type: "danger" })
-          }).done(function(req) {
-            if (!req) return
-            if (req === "Invalid") return redirect()
-            if (req === "Done") return $.notify({ icon: "tim-icons icon-bell-55", message: `As configurações do servidor foram salvas com sucesso!`}, { type: "success" })
-          })
-        })
-    </script>
+    <script src="/assets/js/helper.js"></script>
 </body>
 
 </html>

@@ -145,12 +145,12 @@ async function showGuilds(req, res) {
 async function guildConfig(req, res) {
     const client = clientFunction();
     if (!client) return;
+    const guild = client.guilds.get(req.params.id)
     if (req.session.user) {
-      const guild = client.guilds.get(req.params.id)
       if (guild) {
-          const db_guild = await database.Guilds.findById(guild.id)
+          var db_guild = await database.Guilds.findById(guild.id)
           db_guild ? db_guild : db_guild = await new database.Guilds({ _id: guild.id})
-        if (guild.members.get(req.session.user.id).hasPermission(['MANAGE_MESSAGES'])) {
+        if (guild.members.get(req.session.user.id).hasPermission(['MANAGE_GUILD'])) {
           res.render("main/guildInfo.ejs", {
             id: req.session.user.id,
             username: req.session.user.username,
@@ -178,11 +178,17 @@ async function guildConfig(req, res) {
           })
         }
       } else {
-        await client.generateInvite().then(i => res.redirect(i))
+        await client.generateInvite().then(i => res.redirect(`${i}&guild_id=${req.params.id}`))
       }
     } else {
       res.redirect('https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.glitch.me/api/login&response_type=code&scope=identify%20guilds')
     }
+}
+
+async function sendInvite(req, res) {
+    const client = clientFunction();
+    if (!client) return;
+    await client.generateInvite().then(i => res.redirect(i))
 }
 
 module.exports = function (route) {
@@ -192,4 +198,5 @@ module.exports = function (route) {
     if (route == "/user/id") return userProfile
     if (route == "/guilds") return showGuilds
     if (route == "/guilds/view/id") return guildConfig
+    if (route == "/invite") return sendInvite
 }

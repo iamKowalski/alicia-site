@@ -22,9 +22,28 @@ var UserSchema = new Schema({
     history: { type: Array, default: [] }
 })
 
+const welcomeSchema = new Schema({
+    channel: { type: String, required: true },
+    message: { type: String, required: true }
+})
+const levelSchema = new Schema({
+    channel: { type: String, required: true },
+    message: { type: String, required: true }
+})
+const byebyeSchema = new Schema({
+    channel: { type: String, required: true },
+    message: { type: String, required: true }
+})
+
 var GuildSchema = new Schema({
   _id: String,
-  prefix: { type: String, default: 'a@' }
+  prefix: { type: String, default: 'a@' },
+  logs: { type: Boolean, default: false },
+  logsChannel: String,
+  welcome: welcomeSchema,
+  leveling: levelSchema,
+  ignoredChannels: { type: Array, default: [] },
+  leave: byebyeSchema
 })
 
 module.exports.Users = mongoose.model("Users", UserSchema)
