@@ -13,17 +13,12 @@ const createAccountLimiter = rateLimit({
 apiRouter.get("/login", apiRouterController("/login"))
 apiRouter.get("/logout", apiRouterController("/logout"))
 apiRouter.post("/find", createAccountLimiter, apiRouterController("/find"))
-apiRouter.post("/guild/find", createAccountLimiter, apiRouterController("/guild/find"))
-apiRouter.post("/guild/save", createAccountLimiter, apiRouterController("/guild/save"))
 
 
 mainRouter.get("/", mainRouterController("/"))
 mainRouter.get("/profile", mainRouterController("/profile"))
 mainRouter.get("/find", mainRouterController("/finder"))
 mainRouter.get("/user/:id", mainRouterController("/user/id"))
-mainRouter.get("/guilds", mainRouterController("/guilds"))
-mainRouter.get("/guilds/view/:id", mainRouterController("/guilds/view/id"))
-mainRouter.get("/invite", mainRouterController("/invite"))
 
 module.exports = [
     mainRouter,

@@ -7,6 +7,7 @@
                     <p>Início</p>
                 </a>
             </li>
+            <% if (logged) { %>
             <li>
                 <a href="/profile">
                     <i class="tim-icons icon-single-02"></i>
@@ -19,18 +20,8 @@
                     <p>Procurar usuário</p>
                 </a>
             </li>
-            <li>
-                <a href="/guilds">
-                    <i class="tim-icons icon-link-72"></i>
-                    <p>Servidores<p>
-                </a>
-            </li>
-            <li>
-                <a href="/invite">
-                    <i class="tim-icons icon-wifi"></i>
-                    <p>Convite<p>
-                </a>
-            </li>
+            <% } else { %>
+            <% } %>
         </ul>
     </div>
 </div>

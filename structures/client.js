@@ -9,8 +9,5 @@ client.fetchName = function (name) {
         tag: a.tag
     }))
 }
-client.login("NTU0NDAyMjg5MjU5OTA1MDM3.D2cHgA.z4ozrwpstjj0kUV1oi4YdZSJ7To").then(async () => {
-  console.log('Bot online!')
-  require('./database.js')
-})
+client.login("NTU0NDAyMjg5MjU5OTA1MDM3.D2cHgA.z4ozrwpstjj0kUV1oi4YdZSJ7To").then(async () => console.log('Bot online!'))
 module.exports = () => client.users ? client : null
