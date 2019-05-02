@@ -3,7 +3,7 @@
 
 <%- include('../header/header.ejs') %>
 
-<body class="">
+<body class="" id="site_body">
     <div class="wrapper">
         <div class="sidebar">
             <div class="sidebar-wrapper">
@@ -27,8 +27,20 @@
                             <p>Procurar usuário</p>
                         </a>
                     </li>
+                    <li>
+                        <a href="/guilds">
+                            <i class="tim-icons icon-link-72"></i>
+                            <p>Servidores<p>
+                        </a>
+                    </li>
                     <% } else { %>
                     <% } %>
+                    <li>
+                      <a href="/invite">
+                      <i class="tim-icons icon-wifi"></i>
+                      <p>Convite<p>
+                      </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -46,13 +58,19 @@
                                         <div class="block block-three"></div>
                                         <div class="block block-four"></div>
                                         <a>
-                                            <img class="avatar" src="<%- findedUserAvatar %>"
-                                                alt="<%- findedUserTag %>">
+                                            <img class="avatar" src="<%- findedUserAvatar %>" alt="<%- findedUserTag %>">
                                             <h5 class="title"><%- findedUserTag %></h5>
                                         </a>
+                                        <p class="description">
+                                          <img src="<%- findedUser.presence.game ? findedUser.presence.game.type === 2 ? findedUser.presence.game.name === "Spotify" ? findedUser.presence.game.assets.largeImageURL  : null : findedUser.presence.game.assets.largeImageURL  : null %>" style="border-radius: 50%; width: 35px; heigth: 35px;"  alt="<%- findedUser.presence.game ? findedUser.presence.game.type === 2 ? findedUser.presence.game.name === "Spotify" ? `Ouvindo: ${findedUser.presence.game.details} por ${findedUser.presence.game.state.replace(/;/g,',')}`  : null : `Jogando: ${findedUser.presence.game.name}` : null %>">
+                                          <%- findedUser.presence.game ? findedUser.presence.game.type === 2 ? findedUser.presence.game.name === "Spotify" ? `Ouvindo: ${findedUser.presence.game.details} por ${findedUser.presence.game.state.replace(/;/g,',')}`  : null : `Jogando: ${findedUser.presence.game.name}` : null %>
+                                      </p>
+                                        <div class="card-description">
+                                            <%- db_user.personalText.replace("%command%", '"@Alícia about"') %>
+                                        </div>
                                     </div>
                                     <div class="card-description text-center">
-                                        Bans: 0, Kicks: 0, Mutes: 0, Warns: 0
+                                        Bans: <%- db_user.bans %>, Kicks: <%- db_user.kicks %>, Mutes: <%- db_user.mutes %>, Warns: <%- db_user.warns %>
                                     </div>
                                 </p>
                             </div>
@@ -69,9 +87,7 @@
     <script src="/assets/js/plugins/chartjs.min.js"></script>
     <script src="/assets/js/plugins/bootstrap-notify.js"></script>
     <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
-    <script>
-        let redirect = () => window.location.href = 'false' == "false" ? `https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.herokuapp.com/api/login&response_type=code&scope=identify` : "/api/logout"
-    </script>
+    <script src="/assets/js/helper.js"></script>
 </body>
 
 </html>

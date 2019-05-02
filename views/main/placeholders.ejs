@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header/header.ejs') %>
+
+<body class="" id="site_body">
+  <div class="wrapper">
+    <div class="sidebar">
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="/">
+                            <i class="tim-icons icon-align-center"></i>
+                            <p>Início</p>
+                        </a>
+                    </li>
+                    <% if (logged) { %>
+                    <li>
+                        <a href="/profile">
+                            <i class="tim-icons icon-single-02"></i>
+                            <p>Meu Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/find">
+                            <i class="tim-icons icon-zoom-split"></i>
+                            <p>Procurar usuário</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/guilds">
+                            <i class="tim-icons icon-link-72"></i>
+                            <p>Servidores<p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/help">
+                            <i class="tim-icons icon-satisfied"></i>
+                            <p>Ajuda<p>
+                        </a>
+                    </li>
+                    <% } else { %>
+                    <% } %>
+                    <li>
+                      <a href="/invite">
+                      <i class="tim-icons icon-wifi"></i>
+                      <p>Convite<p>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <div class="main-panel">
+      <%- include('../partials/navbar.ejs') %>
+      <div class="content">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header mb-5">
+                <h5 class="card-category">Central de ajuda - Placeholders</h5>
+                <h3 class="card-title">Aqui está a ajuda sobre placeholders</h3>
+              </div>
+              <div class="card-body">
+                <div class="typography-line">
+                  <h3>Bem-vindo/Saída</h3>
+                </div>
+                <div class="typography-line">
+                  <span>Sem embed</span>
+                  <code>{user}</code>
+                  <code>{user-avatar}</code>
+                  <code>{user}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="/assets/js/helper.js"></script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 
 <%- include('../header/header.ejs') %>
 
-<body class="">
+<body class="" id="site_body">
   <div class="wrapper">
     <%- include('../partials/sidebar.ejs') %>
     <div class="main-panel">
@@ -37,9 +37,7 @@
   <script src="/assets/js/plugins/chartjs.min.js"></script>
   <script src="/assets/js/plugins/bootstrap-notify.js"></script>
   <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
-  <script>
-    let redirect = () => window.location.href = 'false' == "false" ? `https://discordapp.com/api/oauth2/authorize?client_id=554402289259905037&redirect_uri=https://alicinha.herokuapp.com/api/login&response_type=code&scope=identify` : "/api/logout"
-  </script>
+  <script src="/assets/js/helper.js"></script>
 </body>
 
 </html>

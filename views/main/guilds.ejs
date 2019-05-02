@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../header/header.ejs') %>
+
+<body class="" id="site_body">
+  <div class="wrapper">
+            <div class="sidebar">
+            <div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li>
+                        <a href="/">
+                            <i class="tim-icons icon-align-center"></i>
+                            <p>Início</p>
+                        </a>
+                    </li>
+                    <% if (logged) { %>
+                    <li>
+                        <a href="/profile">
+                            <i class="tim-icons icon-single-02"></i>
+                            <p>Meu Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/find">
+                            <i class="tim-icons icon-zoom-split"></i>
+                            <p>Procurar usuário</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="/guilds">
+                            <i class="tim-icons icon-link-72"></i>
+                            <p>Servidores<p>
+                        </a>
+                    </li>
+                    <% } else { %>
+                    <% } %>
+                    <li>
+                      <a href="/invite">
+                      <i class="tim-icons icon-wifi"></i>
+                      <p>Convite<p>
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <div class="main-panel">
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+                <button type="button" class="navbar-toggler">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <a class="navbar-brand" href="/">Alícia - Discord Bot</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+                <li class="search-bar input-group">
+                  <button class="btn btn-link" id="changeTheme"><i class="tim-icons icon-bulb-63"></i>
+                    <span class="d-lg-none d-md-block">Trocar tema</span>
+                  </button>
+                </li>
+                <% if (logged) { %>
+                <li class="search-bar input-group">
+                  <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split"></i>
+                    <span class="d-lg-none d-md-block">Procurar servidor</span>
+                  </button>
+                </li>
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="photo">
+                            <img src="<%- avatar %>" alt="<% - username %>">
+                        </div>
+                        <b class="caret d-none d-lg-block d-xl-block"></b>
+                        <p class="d-lg-none">
+                            <%- username %>
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-navbar">
+                        <li class="nav-link">
+                            <a href="/profile" class="nav-item dropdown-item"><%- tag %></a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="nav-link">
+                            <a href="/api/logout" class="nav-item dropdown-item">Sair</a>
+                        </li>
+                    </ul>
+                </li>
+                <% } else { %>
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="photo">
+                            <img src="<%- clientAvatarDefault %>" alt="<% - clientTag %>">
+                        </div>
+                        <b class="caret d-none d-lg-block d-xl-block"></b>
+                        <p class="d-lg-none">
+                            Entrar
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-navbar">
+                        <li class="nav-link">
+                            <a href="javascript:void(0)" class="nav-item dropdown-item" onclick="redirect()">Entrar</a>
+                        </li>
+                    </ul>
+                </li>
+                <% } %>
+                <li class="separator d-lg-none"></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Digite o nome do servidor!">
+              <button type="submit" class="close" data-dismiss="modal" aria-label="Close" id="startsearch">
+                <i class="tim-icons icon-zoom-split"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                    <h5 class="card-category">Total de servidores: <%- guilds.length %></h5>
+                    <h2 class="card-title">Lista de servidores</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row" id="searchresult">
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <% guilds.forEach(g => { %>
+                    <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                      <div class="font-icon-detail">
+                        <a href="/guilds/view/<%- g.id %>">
+                          <img class="avatar" src="<%- g.icon ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=1024` : clientAvatar %>" alt="<%- g.name %>" style="height: 80px; width: 80px;" >
+                          <p><%- g.name.replace('<', '≺').replace('>', '≻') %></p>
+                        </a>
+                      </div>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="/assets/js/helper.js"></script>
+</body>
+
+</html>
