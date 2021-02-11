@@ -38,11 +38,7 @@ app.get("*", function (req, res) {
       id: req.session.user.id,
       username: req.session.user.username,
       tag: req.session.user.tag,
-      /* servers: client.guilds.size, */
       avatar: req.session.user.displayAvatarURL,
-      /*       channels: client.channels.size,
-            emojis: client.emojis.size,
-            users: client.users.size, */
       logged: true,
       clientAvatarDefault: client.user.defaultAvatarURL,
       clientTag: client.user.tag,
@@ -56,10 +52,6 @@ app.get("*", function (req, res) {
       clientTag: client.user.tag,
       pageTitle: 'Erro',
       clientAvatar: client.user.displayAvatarURL.replace('.jpg', '.png'),
-      /*       servers: client.guilds.size,
-            channels: client.channels.size,
-            emojis: client.emojis.size,
-            users: client.users.size */
     })
   }
 })
